@@ -1,0 +1,8 @@
+POST METHOD
+curl -d '{"title":"Learn Spring", "content":"Learn Spring Boot"}' -H "Content-Type: application/json" -X POST http://localhost:8081/api/notes/
+
+curl -d "title=My first note&content=Spring is awesome" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8081/api/notes/
+
+GET METHOD
+
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8081/

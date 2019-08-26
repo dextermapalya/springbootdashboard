@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.5
+    restart: always
+    container_name: mysqlspring
+    restart: unless-stopped
+    tty: true
+    env_file:
+      - ./mysql/.env
+    ports:
+      - "33062:3306"
+    volumes:
+      - spring-volume-mysql:/var/lib/mysql/
+    networks:
+      - app
+
+  # dashboardapp:
+  #   build: ./
+  #   depends_on:
+  #      - db
+  #   restart: always
+  #   environment:
+  #     - ACTIVE_PROFILE=dev
+  #     - DB_HOST=
+  #     - DB_PORT=3306
+  #     - DB_USER=root
+  #     - DB_PASS=secret
+  #     - DB_NAME=dashboard
+  #   links:
+  #     - db:mysql
+  #   ports:
+  #     - "80:9090"
+  app:
+      build: .
+      ports:
+        - '80:8080'
+      container_name: springbootapp
+      volumes:
+        - ./:/app
+      working_dir: /app
+      user: appuser
+      depends_on:
+        - db
+      restart: always        
+      command: ./gradlew --project-cache-dir /tmp/gradle-cache bootRun
+      networks:
+        - app
+
+networks:
+  app:
+    driver: bridge
+
+volumes:
+  spring-volume-mysql:
+    driver: local
