@@ -1,3 +1,4 @@
+#reference link https://github.com/ntsim/hot-spring-docker
 version: '3'
 
 services:
@@ -16,22 +17,6 @@ services:
     networks:
       - app
 
-  # dashboardapp:
-  #   build: ./
-  #   depends_on:
-  #      - db
-  #   restart: always
-  #   environment:
-  #     - ACTIVE_PROFILE=dev
-  #     - DB_HOST=
-  #     - DB_PORT=3306
-  #     - DB_USER=root
-  #     - DB_PASS=secret
-  #     - DB_NAME=dashboard
-  #   links:
-  #     - db:mysql
-  #   ports:
-  #     - "80:9090"
   app:
       build: .
       ports:
@@ -44,7 +29,8 @@ services:
       depends_on:
         - db
       restart: always        
-      command: ./gradlew --project-cache-dir /tmp/gradle-cache bootRun
+      #command: ./gradlew --project-cache-dir /tmp/gradle-cache bootRun
+      command: sh run.sh
       networks:
         - app
 

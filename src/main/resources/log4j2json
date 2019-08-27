@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG">
+    <Appenders>
+        <Console name="ConsoleJSONAppender" target="SYSTEM_OUT">
+            <JsonLayout complete="false" compact="false">
+                <KeyValuePair key="myCustomField" value="myCustomValue" />
+            </JsonLayout>
+
+        </Console>
+        <File name="LogToFile" fileName="/tmp/app.log">
+            <JsonLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </JsonLayout>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.apalya" level="debug" additivity="false">
+            <AppenderRef ref="LogToFile"/>
+            <AppenderRef ref="LogToConsole"/>
+        </Logger>
+        <Logger name="org.springframework.boot" level="error" additivity="false">
+            <AppenderRef ref="LogToConsole"/>
+        </Logger>
+        <Root level="all">
+            <AppenderRef ref="LogToFile"/>
+            <AppenderRef ref="LogToConsole"/>
+        </Root>
+    </Loggers>
+</Configuration>
